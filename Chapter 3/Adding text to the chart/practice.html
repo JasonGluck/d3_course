@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Learning D3</title>
+	<link rel="stylesheet" href="main.css">
+	<script  type="text/javascript" src="d3.min.js"></script>
+</head>
+<body>
+<!--Place all DOM elements here -->
+<script>
+let w = 800
+let h = 450
+let data = [132,71,337,93,78,43,20,16,30,8,17,21]
+let svg = d3.select("body").append("svg")
+            .attr("id", "chart")
+            .attr("width", w)
+            .attr("height", h)
+
+let x = d3.scale.linear()
+					.domain([0, d3.max(data)])
+					.range([0, w])
+
+let y = d3.scale.linear()
+					.domain([0, data.length])
+					.range([0, h])
+
+svg.selectAll(".bar")
+	.data(data)
+	.enter()
+		.append("rect")
+		.attr("class", "bar")
+		.attr("x", 0)
+		.attr("y", (d,i) => {return y(i)})
+		.attr("width", (d) => {return x(d)})
+		.attr("height", y(1) - 1)
+</script>
+</body>
+</html>
