@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Learning D3</title>
+	<link rel="stylesheet" href="main.css">
+	<script  type="text/javascript" src="d3.min.js"></script>
+</head>
+<body>
+<!--Place all DOM elements here -->
+<script>
+let w = 800
+let h = 450
+let margin = {
+		top: 20,
+		bottom: 20,
+		left: 20,
+		right: 20
+}
+let width = w - margin.left - margin.right
+let height = h - margin.top - margin.bottom
+let data = [132,71,337,93,78,43,20,16,30,8,17,21]
+let data2 = [...new Array(11).keys()].slice(1)
+let svg = d3.select("body").append("svg")
+            .attr("id", "chart")
+            .attr("width", w)
+            .attr("height", h)
+
+let chart = svg.append("g")
+							.classed("display", true)
+							.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+function plot(params) {
+
+	let x = d3.scale.linear()
+						.domain([0, d3.max(params.data)])
+						.range([0, params.width])
+
+	let y = d3.scale.linear()
+						.domain([0, params.data.length])
+						.range([0, params.height])
+
+	this.selectAll(".bar")
+		.data(params.data)
+		.enter()
+			.append("rect")
+			.attr("class", "bar")
+			.attr("x", 0)
+			.attr("y", (d,i) => {return y(i)})
+			.attr("width", (d) => {return x(d)})
+			.attr("height", y(1) - 1)
+
+	this.selectAll(".bar-label")
+		.data(params.data)
+		.enter()
+			.append("text")
+			.classed("bar-label", true)
+			.attr("x", (d,i) => {return x(d)})
+			.attr("dx", -3)
+			.attr("y", (d,i) => {return y(i) + 5})
+			.attr("dy", (d,i) => {return y(1)/1.5})
+			.text((d,i) => {return d})
+}
+
+plot.call(chart, {
+	data: data,
+	width: width,
+	height: height
+})
+
+// plot.call(svg, {
+// 	data: data2
+// })
+
+</script>
+</body>
+</html>

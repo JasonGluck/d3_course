@@ -34,6 +34,17 @@ svg.selectAll(".bar")
 		.attr("y", (d,i) => {return y(i)})
 		.attr("width", (d) => {return x(d)})
 		.attr("height", y(1) - 1)
+
+svg.selectAll(".bar-label")
+	.data(data)
+	.enter()
+		.append("text")
+		.classed("bar-label", true)
+		.attr("x", (d,i) => {return x(d)})
+		.attr("dx", -3)
+		.attr("y", (d,i) => {return y(i)})
+		.attr("dy", (d,i) => {return y(1)/1.5})
+		.text((d,i) => {return d})
 </script>
 </body>
 </html>
